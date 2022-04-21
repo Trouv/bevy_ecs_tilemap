@@ -6,7 +6,7 @@ mod helpers;
 fn startup(mut commands: Commands, asset_server: Res<AssetServer>, mut map_query: MapQuery) {
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
 
-    asset_server.watch_for_changes();
+    asset_server.watch_for_changes().unwrap();
 
     let texture_handle = asset_server.load("tiles.png");
 
