@@ -1,10 +1,12 @@
-use bevy::prelude::*;
+use bevy::{asset::AssetServerSettings, prelude::*};
 use bevy_ecs_tilemap::prelude::*;
 
 mod helpers;
 
 fn startup(mut commands: Commands, asset_server: Res<AssetServer>, mut map_query: MapQuery) {
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
+
+    asset_server.watch_for_changes();
 
     let texture_handle = asset_server.load("tiles.png");
 
@@ -63,6 +65,10 @@ fn main() {
             width: 1270.0,
             height: 720.0,
             title: String::from("Map Example"),
+            ..Default::default()
+        })
+        .insert_resource(AssetServerSettings {
+            watch_for_changes: true,
             ..Default::default()
         })
         .add_plugins(DefaultPlugins)
